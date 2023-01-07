@@ -8,7 +8,7 @@ const helpers = require('./utils/helpers');
 
 // handlebars
 const exphbs = require('express-handlebars');
-const hbs = exphbs.create({helpers});
+const hbs = exphbs({defaultLayout: 'main', extname: '.hbs'})
 
 // session (connects session to sequelize Database)
 const session = require('express-session');
@@ -35,13 +35,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // set Handlebars as the default template engine
-app.engine('handlebars', hbs.engine);
-app.set('view engine', 'handlebars');
+app.engine('hbs', hbs);
+app.set('view engine', 'hbs');
 
 // turn on routes
 app.use(routes);
 
 // turn on connection to db and server
 sequelize.sync({ force: false }).then(() => {
-  app.listen(PORT, () => console.log('Now listening'));
+  app.listen(PORT, () => console.log('Now listening ' + PORT));
 });
