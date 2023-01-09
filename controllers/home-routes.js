@@ -5,8 +5,6 @@ const sequelize = require('../config/connection');
 
 // rendering all posts to homepage
 router.get('/', (req, res) => {
-    console.log(req.session);
-
     Post.findAll({
         attributes: [
           'id',
@@ -53,6 +51,7 @@ router.get('/login', (req, res) => {
 router.get('/signup', (req, res) => {
     res.render('signup');
 });
+
 
 //rendering one post to the single-post page
 router.get('/post/:id', (req, res) => {

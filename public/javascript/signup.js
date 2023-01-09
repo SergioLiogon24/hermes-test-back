@@ -1,24 +1,33 @@
-async function signupFormHandler(event) {
-    event.preventDefault();
+async function signupFormHandler(e) {
+    e.preventDefault();
 
     // getting data from the form
-    const username = document.querySelector('#username-signup').value.trim();
-    const email = document.querySelector('#email-signup').value.trim();
-    const password = document.querySelector('#password-signup').value.trim();
-
-    if (username && email && password) {
-        const response = await fetch('/api/users', {
+    const name = e.target.name.value
+    const birthday = e.target.birthday.value
+    const license = e.target.license.value
+    const city = e.target.license.value
+    const expiration = e.target.expiration.value
+    const username = e.target.username.value
+    const password = e.target.password.value
+    const phone = e.target.phone.value
+    /* Check all elements containes something or not null, NaN, etc.. */
+    if (name && username && password && birthday && license && city && expiration && phone) {
+        const response = await fetch('/api/drivers', {
           method: 'post',
           body: JSON.stringify({
+            name,
             username,
-            email,
-            password
+            password,
+            birthday,
+            license,
+            city,
+            expiration,
+            phone
           }),
           headers: { 'Content-Type': 'application/json' }
         }); 
     // check the response status
     if (response.ok) {
-        console.log('success');
         document.location.replace('/dashboard');
       } else {
         alert(response.statusText);
